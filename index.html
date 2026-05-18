@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Auditoría MPD — Ley 20.393 / Ley 21.595</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --navy:#0E2A47;
+    --navy-ink:#0A1F36;
+    --burgundy:#7A1F2B;
+    --burgundy-deep:#5E1620;
+    --bone:#FAF8F5;
+    --bone-2:#F3F0E9;
+    --stone:#E8E5DF;
+    --stone-2:#D8D4CB;
+    --ink:#1A1A1A;
+    --ink-2:#3a3a39;
+    --muted:#6a6a66;
+    --rojo:#8C2B2B;
+    --rojo-bg:#EFD9D6;
+    --amarillo:#8A6A1F;
+    --amarillo-bg:#EFE6CC;
+    --verde:#2E5D3E;
+    --verde-bg:#D9E4D7;
+
+    --serif: "EB Garamond", "Source Serif 4", Georgia, serif;
+    --body:  "Source Serif 4", Georgia, serif;
+    --mono:  "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --maxw: 1180px;
+    --gutter: clamp(20px, 4vw, 56px);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bone);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:17px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--navy);color:var(--bone)}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+  .hairline{height:1px;background:var(--stone);border:0;margin:0}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,248,245,.92);
+    backdrop-filter:saturate(140%) blur(6px);
+    border-bottom:1px solid var(--stone);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:68px;
+  }
+  .brand{
+    display:flex;align-items:center;gap:12px;
+    font-family:var(--serif);font-size:19px;letter-spacing:.01em;
+    color:var(--navy);
+  }
+  .brand-mark{
+    width:28px;height:28px;border:1px solid var(--navy);
+    display:grid;place-items:center;
+    font-family:var(--serif);font-style:italic;font-size:17px;
+    color:var(--navy);background:transparent;
+  }
+  .brand-name{font-weight:500}
+  .brand-suffix{color:var(--muted);font-style:italic;margin-left:2px}
+  .nav-links{display:flex;align-items:center;gap:28px}
+  .nav-links a{
+    font-family:var(--body);font-size:14px;color:var(--ink-2);
+    letter-spacing:.02em;
+  }
+  .nav-links a:hover{color:var(--navy);text-decoration:underline;text-underline-offset:4px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:10px 18px;font-family:var(--body);font-size:14px;
+    letter-spacing:.02em;border:1px solid transparent;cursor:pointer;
+    transition:transform .15s ease, background .15s ease, color .15s ease;
+  }
+  .btn-primary{background:var(--burgundy);color:var(--bone)}
+  .btn-primary:hover{background:var(--burgundy-deep)}
+  .btn-ghost{background:transparent;color:var(--navy);border-color:var(--navy)}
+  .btn-ghost:hover{background:var(--navy);color:var(--bone)}
+  .btn-arrow{font-family:var(--serif);font-style:italic;transform:translateY(-1px)}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:72px 0 88px}
+  .hero-grid{
+    display:grid;grid-template-columns: 1.05fr .95fr;
+    gap:64px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+    color:var(--muted);text-transform:uppercase;margin-bottom:24px;
+  }
+  .eyebrow:before{content:"";width:24px;height:1px;background:var(--muted)}
+  h1.display{
+    font-family:var(--serif);font-weight:500;
+    font-size:clamp(40px, 5.4vw, 64px);
+    line-height:1.05;letter-spacing:-.005em;
+    color:var(--navy);margin:0 0 22px;
+    text-wrap:balance;
+  }
+  h1.display em{font-style:italic;color:var(--burgundy);font-weight:500}
+  .hero-sub{
+    font-size:19px;color:var(--ink-2);max-width:52ch;
+    line-height:1.5;margin:0 0 32px;text-wrap:pretty;
+  }
+  .hero-ctas{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .hero-meta{
+    margin-top:36px;display:flex;gap:22px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+    color:var(--muted);text-transform:uppercase;
+  }
+  .hero-meta span{display:inline-flex;align-items:center;gap:8px}
+  .hero-meta span:before{content:"§";color:var(--burgundy);font-family:var(--serif);font-style:italic;font-size:14px;letter-spacing:0}
+
+  /* ---------- BREACH CARD ---------- */
+  .doc{
+    background:var(--bone);
+    border:1px solid var(--stone-2);
+    box-shadow: 0 1px 0 var(--stone) inset, 24px 24px 0 -16px var(--stone);
+    padding:26px 28px 28px;
+    position:relative;
+  }
+  .doc-head{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    gap:16px;margin-bottom:18px;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;padding:5px 9px;
+  }
+  .badge .dot{width:6px;height:6px;border-radius:999px;display:inline-block}
+  .badge-rojo{background:var(--rojo-bg);color:var(--rojo)}
+  .badge-rojo .dot{background:var(--rojo)}
+  .badge-amarillo{background:var(--amarillo-bg);color:var(--amarillo)}
+  .badge-amarillo .dot{background:var(--amarillo)}
+  .badge-verde{background:var(--verde-bg);color:var(--verde)}
+  .badge-verde .dot{background:var(--verde)}
+  .doc-id{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+  .doc-title{
+    font-family:var(--serif);font-size:22px;color:var(--navy);
+    margin:0 0 6px;letter-spacing:-.005em;
+  }
+  .doc-sub{
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    letter-spacing:.04em;margin-bottom:18px;
+  }
+  .doc-row{
+    display:grid;grid-template-columns:88px 1fr;gap:14px;
+    padding:10px 0;border-top:1px dashed var(--stone-2);
+    align-items:baseline;
+  }
+  .doc-row:first-of-type{border-top:0;padding-top:0}
+  .doc-row .k{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .doc-row .v{font-size:15px;color:var(--ink);line-height:1.45}
+  .doc-row .v em{font-family:var(--serif);font-style:italic;color:var(--navy)}
+  .doc-cite{
+    margin-top:18px;padding:12px 14px;
+    background:var(--bone-2);
+    font-family:var(--mono);font-size:11.5px;color:var(--ink-2);
+    line-height:1.6;border-left:2px solid var(--navy);
+  }
+  .doc-cite b{color:var(--navy);font-weight:500}
+  .doc-corner{
+    position:absolute;top:-10px;right:18px;
+    background:var(--bone);padding:0 8px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);
+  }
+
+  /* ---------- LEGAL STRIP ---------- */
+  .strip{
+    border-top:1px solid var(--stone);
+    border-bottom:1px solid var(--stone);
+    background:var(--bone-2);
+  }
+  .strip-inner{
+    display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+    gap:0;padding:20px var(--gutter);
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-2);
+  }
+  .strip-inner span{padding:0 22px;position:relative}
+  .strip-inner span + span:before{
+    content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+    width:1px;height:14px;background:var(--stone-2);
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:88px 0}
+  .sec-head{display:flex;align-items:baseline;gap:24px;margin-bottom:40px}
+  .sec-num{
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;
+    color:var(--burgundy);text-transform:uppercase;
+    border:1px solid var(--burgundy);padding:5px 10px;
+    align-self:flex-start;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:500;
+    font-size:clamp(28px, 3.4vw, 42px);
+    color:var(--navy);margin:0;line-height:1.1;letter-spacing:-.005em;
+    text-wrap:balance;
+  }
+  .sec-title em{font-style:italic;color:var(--burgundy)}
+  .sec-kicker{
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+    color:var(--muted);text-transform:uppercase;margin-bottom:14px;
+  }
+
+  /* ---------- PROBLEMA ---------- */
+  .problema{padding-top:104px}
+  .problema-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:64px}
+  .problema-grid p{
+    font-family:var(--serif);font-size:24px;line-height:1.4;
+    color:var(--ink);margin:0 0 18px;max-width:36ch;text-wrap:pretty;
+  }
+  .problema-grid p em{color:var(--burgundy);font-style:italic}
+  .problema-grid p:last-child{font-size:18px;font-family:var(--body);color:var(--ink-2);max-width:46ch}
+
+  /* ---------- COMO FUNCIONA ---------- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--stone)}
+  .step{
+    padding:32px 28px 32px 0;border-right:1px solid var(--stone);
+    position:relative;
+  }
+  .step:last-child{border-right:0}
+  .step-num{
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+    color:var(--burgundy);margin-bottom:18px;
+  }
+  .step-icon{
+    width:42px;height:42px;border:1px solid var(--navy);
+    display:grid;place-items:center;margin-bottom:20px;color:var(--navy);
+  }
+  .step-title{
+    font-family:var(--serif);font-size:21px;color:var(--navy);
+    margin:0 0 8px;line-height:1.2;
+  }
+  .step-desc{font-size:15px;color:var(--ink-2);line-height:1.5;margin:0;max-width:30ch}
+
+  /* ---------- PERSONAS ---------- */
+  .personas{padding:104px 0;background:linear-gradient(var(--bone) 0,var(--bone-2) 100%)}
+  .persona{
+    display:grid;grid-template-columns:1fr 1fr;gap:72px;
+    padding:64px 0;align-items:center;
+    border-top:1px solid var(--stone);
+  }
+  .persona:first-of-type{border-top:0}
+  .persona.flip > .persona-text{order:2}
+  .persona.flip > .persona-art{order:1}
+  .persona-tag{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:18px;
+  }
+  .persona-tag .roman{
+    font-family:var(--serif);font-style:italic;color:var(--burgundy);
+    font-size:18px;letter-spacing:0;
+  }
+  .persona h3{
+    font-family:var(--serif);font-weight:500;font-size:34px;
+    color:var(--navy);margin:0 0 28px;line-height:1.15;text-wrap:balance;
+  }
+  .quote{
+    border-left:3px solid var(--burgundy);
+    padding:6px 0 6px 20px;margin:0 0 22px;
+    font-family:var(--serif);font-style:italic;font-size:20px;
+    color:var(--ink);line-height:1.4;max-width:42ch;text-wrap:pretty;
+  }
+  .quote:before{content:"“";font-family:var(--serif);font-style:italic}
+  .quote:after{content:"”";font-family:var(--serif);font-style:italic}
+  .promesa-label{
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px;
+  }
+  .promesa{font-size:17px;color:var(--ink-2);max-width:46ch;margin:0;line-height:1.5}
+
+  /* Verbatim block (persona B) */
+  .verbatim{
+    background:var(--bone);
+    border:1px solid var(--stone-2);
+    padding:36px 36px 30px;
+    position:relative;
+  }
+  .verbatim-corner{
+    position:absolute;top:-10px;left:24px;
+    background:var(--bone);padding:0 8px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .verbatim blockquote{
+    margin:0;padding:0 0 0 22px;border-left:5px solid var(--navy);
+    font-family:var(--serif);font-style:italic;
+    font-size:21px;line-height:1.5;color:var(--ink);
+  }
+  .verbatim-source{
+    margin-top:22px;padding-top:18px;border-top:1px dashed var(--stone-2);
+    font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+    color:var(--muted);line-height:1.7;
+  }
+  .verbatim-source b{color:var(--navy);font-weight:500}
+  .verbatim-source .ok{color:var(--verde);font-weight:500}
+
+  /* Executive summary (persona C) */
+  .exec{
+    background:var(--navy);color:var(--bone);
+    padding:36px 38px;
+  }
+  .exec-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid rgba(250,248,245,.18);padding-bottom:16px;margin-bottom:8px;
+  }
+  .exec-head h4{
+    font-family:var(--serif);font-weight:500;font-size:22px;margin:0;
+    letter-spacing:.005em;
+  }
+  .exec-head .stamp{
+    font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:rgba(250,248,245,.55);
+  }
+  .exec-row{
+    display:grid;grid-template-columns:1fr auto;gap:24px;
+    padding:18px 0;border-bottom:1px solid rgba(250,248,245,.12);
+    align-items:baseline;
+  }
+  .exec-row:last-of-type{border-bottom:0}
+  .exec-row .label{font-family:var(--body);font-size:15px;color:rgba(250,248,245,.78)}
+  .exec-row .label .lk{
+    display:inline-block;width:7px;height:7px;border-radius:999px;
+    margin-right:10px;vertical-align:middle;
+  }
+  .exec-row .val{
+    font-family:var(--serif);font-size:34px;color:var(--bone);
+    letter-spacing:-.01em;line-height:1;
+  }
+  .exec-row.range .val{font-size:18px;font-family:var(--mono);letter-spacing:.04em}
+  .exec-foot{
+    margin-top:22px;font-family:var(--mono);font-size:10.5px;
+    letter-spacing:.16em;text-transform:uppercase;color:rgba(250,248,245,.5);
+  }
+
+  /* ---------- METODOLOGIA ---------- */
+  .metodologia{background:var(--bone-2);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone)}
+  .met-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+  .met-col{padding:8px 36px 8px 0;border-right:1px solid var(--stone)}
+  .met-col:last-child{border-right:0;padding-right:0}
+  .met-col:not(:first-child){padding-left:36px}
+  .met-col h4{
+    font-family:var(--serif);font-weight:500;font-size:22px;
+    color:var(--navy);margin:0 0 16px;
+  }
+  .met-col p{font-size:15px;color:var(--ink-2);line-height:1.55;margin:0 0 14px}
+  .met-quote{
+    font-family:var(--serif);font-style:italic;font-size:17px;
+    color:var(--ink);border-left:2px solid var(--navy);
+    padding:4px 0 4px 14px;margin:0 0 14px;line-height:1.45;
+  }
+  .met-meta{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .pill{
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+    padding:4px 9px;border:1px solid var(--stone-2);background:var(--bone);
+    color:var(--ink-2);
+  }
+
+  /* ---------- ENTREGABLES ---------- */
+  .entregables-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:8px}
+  .deliv{
+    background:var(--bone);border:1px solid var(--stone-2);
+    padding:34px 34px 30px;position:relative;
+  }
+  .deliv-tag{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--burgundy);margin-bottom:10px;
+  }
+  .deliv h4{
+    font-family:var(--serif);font-weight:500;font-size:26px;
+    color:var(--navy);margin:0 0 18px;line-height:1.15;
+  }
+  .deliv ul{list-style:none;margin:0;padding:0}
+  .deliv ul li{
+    padding:12px 0;border-top:1px dashed var(--stone-2);
+    font-size:15px;color:var(--ink-2);line-height:1.5;
+    display:grid;grid-template-columns:18px 1fr;gap:10px;align-items:baseline;
+  }
+  .deliv ul li:first-child{border-top:0}
+  .deliv ul li:before{
+    content:"§";color:var(--burgundy);font-family:var(--serif);
+    font-style:italic;font-size:15px;
+  }
+
+  /* Roadmap fragment */
+  .roadmap{
+    margin-top:24px;background:var(--bone-2);
+    border:1px solid var(--stone-2);padding:0;
+  }
+  .roadmap-head{
+    padding:14px 18px;border-bottom:1px solid var(--stone-2);
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .roadmap-head .phase{color:var(--navy);font-weight:500;letter-spacing:.18em}
+  .roadmap-row{
+    display:grid;
+    grid-template-columns: 1.2fr 1.6fr .9fr .6fr;
+    gap:14px;padding:14px 18px;
+    border-top:1px solid var(--stone-2);
+    font-family:var(--mono);font-size:12px;color:var(--ink);
+    align-items:center;line-height:1.4;
+  }
+  .roadmap-row:first-of-type{border-top:0}
+  .roadmap-row .el{color:var(--navy);font-weight:500}
+  .roadmap-row .ac{color:var(--ink)}
+  .roadmap-row .re{color:var(--ink-2);font-style:italic;font-family:var(--serif);font-size:14px}
+  .roadmap-row .pl{color:var(--burgundy);font-weight:500;text-align:right}
+  .roadmap-cols{
+    display:grid;grid-template-columns:1.2fr 1.6fr .9fr .6fr;
+    gap:14px;padding:10px 18px;background:var(--bone);
+    border-top:1px solid var(--stone-2);
+    font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .roadmap-cols .pl{text-align:right}
+
+  /* ---------- CTA / FORM ---------- */
+  .cta{
+    background:var(--navy);color:var(--bone);
+    padding:104px 0;
+  }
+  .cta .sec-num{color:var(--bone);border-color:var(--bone)}
+  .cta .sec-title{color:var(--bone)}
+  .cta .sec-title em{color:#E6B07A}
+  .cta-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:72px;margin-top:24px;align-items:start}
+  .cta-lede{font-size:18px;color:rgba(250,248,245,.78);line-height:1.55;max-width:42ch;margin:0 0 28px}
+  .cta-list{list-style:none;margin:0;padding:0;border-top:1px solid rgba(250,248,245,.18)}
+  .cta-list li{
+    padding:16px 0;border-bottom:1px solid rgba(250,248,245,.18);
+    display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:baseline;
+  }
+  .cta-list .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(250,248,245,.55)}
+  .cta-list .v{font-family:var(--serif);font-size:17px;color:var(--bone)}
+
+  form.diag{
+    background:var(--bone);color:var(--ink);
+    padding:36px 36px 30px;
+  }
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 22px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field.full{grid-column:1 / -1}
+  .field label{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .field input,.field select{
+    font-family:var(--body);font-size:16px;color:var(--ink);
+    background:transparent;border:0;border-bottom:1px solid var(--stone-2);
+    padding:8px 0 9px;outline:none;
+    transition:border-color .15s;
+  }
+  .field input:focus,.field select:focus{border-color:var(--navy)}
+  .field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--navy) 50%),linear-gradient(135deg,var(--navy) 50%,transparent 50%);background-position:calc(100% - 12px) 18px,calc(100% - 7px) 18px;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:24px}
+  .form-foot{
+    margin-top:26px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .form-foot .note{
+    font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+    color:var(--muted);
+  }
+  .form-foot .note b{color:var(--navy);font-weight:500}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--bone);border-top:1px solid var(--stone);
+    padding:48px 0 32px;
+  }
+  .foot-grid{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;
+    align-items:start;
+  }
+  .foot h5{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);margin:0 0 14px;font-weight:500;
+  }
+  .foot p, .foot a{
+    font-size:14.5px;color:var(--ink-2);line-height:1.6;margin:0 0 6px;display:block;
+  }
+  .foot a:hover{color:var(--navy)}
+  .foot-bottom{
+    margin-top:40px;padding-top:20px;border-top:1px solid var(--stone);
+    display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 980px){
+    .hero-grid{grid-template-columns:1fr;gap:48px}
+    .problema-grid{grid-template-columns:1fr;gap:24px}
+    .steps{grid-template-columns:repeat(2,1fr)}
+    .step{border-right:0;border-bottom:1px solid var(--stone)}
+    .persona, .persona.flip{grid-template-columns:1fr;gap:32px}
+    .persona.flip > .persona-text{order:1}
+    .persona.flip > .persona-art{order:2}
+    .met-grid{grid-template-columns:1fr;gap:24px}
+    .met-col{border-right:0;border-bottom:1px solid var(--stone);padding:0 0 24px;}
+    .met-col:not(:first-child){padding-left:0}
+    .entregables-grid, .cta-grid{grid-template-columns:1fr;gap:36px}
+    .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
+    .form-grid{grid-template-columns:1fr}
+    .nav-links a:not(.btn){display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">P</span>
+      <span><span class="brand-name">Despacho Demo</span><span class="brand-suffix"> &middot; Carlos Palacios</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#servicio">Servicio</a>
+      <a href="#metodologia">Metodología</a>
+      <a href="#contacto">Contacto</a>
+      <a href="#contacto" class="btn btn-primary">Solicitar diagnóstico <span class="btn-arrow">→</span></a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Auditoría MPD · Ley 20.393 / Ley 21.595</div>
+      <h1 class="display">
+        Su Modelo de Prevención de Delitos, evaluado contra el estándar del <em>Art. 4 de la Ley 20.393</em> y el catálogo expandido de la <em>Ley 21.595</em>.
+      </h1>
+      <p class="hero-sub">
+        Una auditoría externa, modulada por tamaño y sector, que clasifica cada brecha en ROJO / AMARILLO / VERDE con cita verbatim y entrega una hoja de ruta priorizada en tres horizontes.
+      </p>
+      <div class="hero-ctas">
+        <a href="#contacto" class="btn btn-primary">Solicitar diagnóstico <span class="btn-arrow">→</span></a>
+        <a href="#metodologia" class="btn btn-ghost">Ver metodología</a>
+      </div>
+      <div class="hero-meta">
+        <span>4° TOP Santiago · CORPESCA</span>
+        <span>Vigente desde 01-09-2024</span>
+        <span>100+ delitos base</span>
+      </div>
+    </div>
+
+    <!-- Tarjeta de brecha -->
+    <aside class="doc" aria-label="Tarjeta de brecha">
+      <span class="doc-corner">Informe / fragmento</span>
+      <div class="doc-head">
+        <span class="badge badge-rojo"><span class="dot"></span> ROJO · Crítica</span>
+        <span class="doc-id">b1 · art4-n2 / canal-denuncia</span>
+      </div>
+      <h3 class="doc-title">Canal de denuncia sin trazabilidad ni protección verificable del denunciante.</h3>
+      <div class="doc-sub">Elemento estructural · Art. 4 N°2 Ley 20.393</div>
+      <div class="doc-row">
+        <span class="k">Defecto</span>
+        <span class="v">Buzón de correo genérico, sin registro, sin custodia independiente, sin protocolo de respuesta documentado.</span>
+      </div>
+      <div class="doc-row">
+        <span class="k">Impacto</span>
+        <span class="v">El MPD no cumple el requisito de canal idóneo. <em>El elemento 2 se considera ausente en su totalidad.</em></span>
+      </div>
+      <div class="doc-cite">
+        <b>Cita:</b> «(…) protocolos, reglas y procedimientos específicos que permitan a las personas que intervienen en las actividades o procesos (…) programar y ejecutar sus tareas o labores de una manera que prevenga la comisión de los delitos (…)»<br/>
+        <b>Ley 20.393, Art. 4 N°2</b> &nbsp;·&nbsp; versión 2024-09-01 &nbsp;·&nbsp; derogada: no
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ STRIP ============ -->
+<div class="strip">
+  <div class="strip-inner">
+    <span>Ley 20.393</span>
+    <span>Ley 21.595</span>
+    <span>Art. 4 — cuatro elementos</span>
+    <span>CORPESCA — RIT 309-2018</span>
+    <span>4° TOP Santiago, 2021</span>
+  </div>
+</div>
+
+<!-- ============ PROBLEMA ============ -->
+<section class="problema" id="problema">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">01 · Contexto</span>
+      <h2 class="sec-title">El problema.</h2>
+    </div>
+    <div class="problema-grid">
+      <p>La Ley 21.595 reescribió el perímetro de imputación: <em>más de cien delitos base</em>, cuatro categorías, vigentes desde el 1 de septiembre de 2024.</p>
+      <div>
+        <p>Los Modelos de Prevención diseñados bajo el marco original de 2009 quedaron estructuralmente desactualizados. No se trata de añadir tipos penales: la lógica del Art. 4 cambió y el catálogo de riesgos a mapear se expandió.</p>
+        <p>Un MPD no re-mapeado bajo el nuevo estándar se presume deficiente. La responsabilidad residual recae sobre la persona jurídica y, en última instancia, sobre el directorio y la administración superior.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hairline" />
+
+<!-- ============ COMO FUNCIONA ============ -->
+<section id="servicio">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">02 · Servicio</span>
+      <h2 class="sec-title">Cómo funciona la auditoría.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 4h11l3 3v13H5z"/><path d="M16 4v3h3"/><path d="M8 12h8M8 16h5"/></svg>
+        </div>
+        <h3 class="step-title">Recepción del MPD</h3>
+        <p class="step-desc">Recibimos el MPD vigente o en diseño, junto con giro y tamaño de la empresa.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="16" height="16"/><path d="M4 10h16M10 4v16"/></svg>
+        </div>
+        <h3 class="step-title">Análisis estructural</h3>
+        <p class="step-desc">Auditoría contra los cuatro elementos del Art. 4 y los tres fundamentos de imputación del Art. 3.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg>
+        </div>
+        <h3 class="step-title">Mapeo del catálogo</h3>
+        <p class="step-desc">Exposición a delitos base de la Ley 21.595, modulada por sector y tamaño.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 18l5-5 4 4 7-9"/><path d="M14 8h6v6"/></svg>
+        </div>
+        <h3 class="step-title">Hoja de ruta priorizada</h3>
+        <p class="step-desc">Brechas clasificadas ROJO / AMARILLO / VERDE y remediación a 0–90, 91–180, 181–365 días.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PERSONAS ============ -->
+<section class="personas" id="personas">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">03 · Para quién</span>
+      <h2 class="sec-title">Tres lecturas del mismo informe.</h2>
+    </div>
+
+    <!-- PERSONA A -->
+    <div class="persona">
+      <div class="persona-text">
+        <div class="persona-tag"><span class="roman">I.</span> Encargado de Prevención de Delitos</div>
+        <h3>Brechas estructurales del Art. 4, ordenadas como las defenderá ante el directorio.</h3>
+        <blockquote class="quote">Tengo que defender el MPD ante el directorio y no sé qué brechas son ROJAS bajo el Art. 4 actualizado.</blockquote>
+        <div class="promesa-label">Promesa</div>
+        <p class="promesa">Mapa estructurado de brechas por elemento del Art. 4, con clasificación de severidad y hoja de ruta lista para presentar al directorio en una sola sesión.</p>
+      </div>
+      <div class="persona-art">
+        <div class="doc">
+          <span class="doc-corner">Brecha · ejemplar</span>
+          <div class="doc-head">
+            <span class="badge badge-amarillo"><span class="dot"></span> AMARILLO · Atención</span>
+            <span class="doc-id">b7 · art4-n4 / auditoría 3°</span>
+          </div>
+          <h3 class="doc-title">Auditoría por tercero independiente: alcance insuficiente.</h3>
+          <div class="doc-sub">Elemento estructural · Art. 4 N°4 Ley 20.393</div>
+          <div class="doc-row">
+            <span class="k">Defecto</span>
+            <span class="v">Revisión anual limitada a controles financieros. <em>No cubre los protocolos del Art. 4 N°2 ni el funcionamiento del canal.</em></span>
+          </div>
+          <div class="doc-row">
+            <span class="k">Impacto</span>
+            <span class="v">Cumplimiento formal pero no material. El elemento se degrada de VERDE a AMARILLO bajo el estándar Ley 21.595.</span>
+          </div>
+          <div class="doc-cite">
+            <b>Cita:</b> «(…) supervisión por un tercero independiente y autónomo de la persona jurídica, en relación con los riesgos identificados y la operatividad del modelo.»<br/>
+            <b>Ley 20.393, Art. 4 N°4</b> &nbsp;·&nbsp; versión 2024-09-01 &nbsp;·&nbsp; derogada: no
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERSONA B -->
+    <div class="persona flip">
+      <div class="persona-text">
+        <div class="persona-tag"><span class="roman">II.</span> Abogado corporativo / externo</div>
+        <h3>Citas verbatim, jurisprudencia aplicada, defensa documentada.</h3>
+        <blockquote class="quote">Necesito defender un MPD en due diligence o asesorar post-Ley 21.595, con respaldo jurisprudencial.</blockquote>
+        <div class="promesa-label">Promesa</div>
+        <p class="promesa">Análisis con citas verbatim trazables (versión y fecha) y anclaje jurisprudencial en CORPESCA, RIT 309-2018, 4° TOP Santiago, 2021.</p>
+      </div>
+      <div class="persona-art">
+        <div class="verbatim">
+          <span class="verbatim-corner">Cita verbatim</span>
+          <blockquote>
+            La idoneidad del modelo se evalúa por su aptitud objetiva para prevenir la comisión de los delitos en su modalidad concreta de operación, y no por su mera existencia formal o aprobación por el órgano de administración.
+          </blockquote>
+          <div class="verbatim-source">
+            <b>Ley 20.393, Art. 4</b> &nbsp;·&nbsp; versión 2024-09-01 &nbsp;·&nbsp; derogada: <span class="ok">no</span><br/>
+            <b>Jurisprudencia aplicada:</b> CORPESCA — RIT 309-2018, 4° TOP Stgo., 2021<br/>
+            <b>Fundamento de imputación:</b> Art. 3 N°1, 2 y 3 Ley 20.393
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERSONA C -->
+    <div class="persona">
+      <div class="persona-text">
+        <div class="persona-tag"><span class="roman">III.</span> Director / C-suite</div>
+        <h3>Un dictamen ejecutivo de si su MPD es idóneo y efectivo.</h3>
+        <blockquote class="quote">La Ley 21.595 expandió a 100+ delitos. Mi responsabilidad residual aumentó. ¿Mi MPD me defiende?</blockquote>
+        <div class="promesa-label">Promesa</div>
+        <p class="promesa">Resumen ejecutivo en una página: número de brechas por severidad, horizontes de remediación y dictamen de idoneidad. Sin jerga, sin gráficos decorativos.</p>
+      </div>
+      <div class="persona-art">
+        <div class="exec">
+          <div class="exec-head">
+            <h4>Resumen ejecutivo</h4>
+            <span class="stamp">Confidencial · directorio</span>
+          </div>
+          <div class="exec-row">
+            <span class="label"><span class="lk" style="background:#D88B85"></span>Brechas ROJAS</span>
+            <span class="val">4</span>
+          </div>
+          <div class="exec-row">
+            <span class="label"><span class="lk" style="background:#D8C28A"></span>Brechas AMARILLAS</span>
+            <span class="val">6</span>
+          </div>
+          <div class="exec-row range">
+            <span class="label"><span class="lk" style="background:#A8C2A8"></span>Horizonte de remediación</span>
+            <span class="val">0–365 días</span>
+          </div>
+          <div class="exec-foot">Dictamen · MPD no idóneo bajo Ley 21.595 — remediación viable</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ METODOLOGIA ============ -->
+<section class="metodologia" id="metodologia">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">04 · Metodología</span>
+      <h2 class="sec-title">Tres pilares verificables.</h2>
+    </div>
+    <div class="met-grid">
+      <div class="met-col">
+        <div class="sec-kicker">Estándar legal</div>
+        <h4>Art. 4 Ley 20.393, leído verbatim.</h4>
+        <p class="met-quote">«El modelo deberá contener, a lo menos, los siguientes elementos: 1° identificación de actividades o procesos (…); 2° protocolos, reglas y procedimientos (…); 3° designación de un encargado de prevención (…); 4° supervisión por un tercero independiente.»</p>
+        <p>Cada uno de los cuatro elementos se evalúa por separado, con cita verbatim y referencia de versión. No se parafrasea.</p>
+        <div class="met-meta">Ley 20.393 · versión 2024-09-01</div>
+      </div>
+      <div class="met-col">
+        <div class="sec-kicker">Jurisprudencia</div>
+        <h4>CORPESCA: idoneidad material, no formal.</h4>
+        <p>El 4° Tribunal Oral en lo Penal de Santiago (2021, RIT 309-2018) consolidó que la mera existencia documental del MPD no constituye eximente. La defensa requiere prueba de operatividad concreta.</p>
+        <p>Esa lectura ancla la clasificación ROJO / AMARILLO / VERDE: cada brecha se mide contra evidencia de funcionamiento, no contra la existencia del documento.</p>
+        <div class="met-meta">CORPESCA · RIT 309-2018 · 4° TOP Stgo.</div>
+      </div>
+      <div class="met-col">
+        <div class="sec-kicker">Modulación</div>
+        <h4>Tamaño y sector, calibrados.</h4>
+        <p>El estándar exigible difiere entre una micro, una pyme y una gran empresa, y entre sectores con perfiles de riesgo distintos. La auditoría modula la exigencia y el catálogo de riesgos a mapear.</p>
+        <div class="pill-row">
+          <span class="pill">Micro</span>
+          <span class="pill">Pyme</span>
+          <span class="pill">Grande</span>
+        </div>
+        <div class="pill-row" style="margin-top:8px">
+          <span class="pill">Educación superior</span>
+          <span class="pill">Financiero</span>
+          <span class="pill">Construcción</span>
+          <span class="pill">Salud</span>
+          <span class="pill">Retail</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENTREGABLES ============ -->
+<section id="entregables">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">05 · Entregables</span>
+      <h2 class="sec-title">Dos documentos, una decisión.</h2>
+    </div>
+
+    <div class="entregables-grid">
+      <article class="deliv">
+        <div class="deliv-tag">Documento I</div>
+        <h4>Informe de auditoría</h4>
+        <ul>
+          <li>Evaluación de cada uno de los cuatro elementos del Art. 4, por separado.</li>
+          <li>Mapa de exposición a delitos base Ley 21.595, modulado por sector y tamaño.</li>
+          <li>Listado completo de brechas, cada una con clasificación ROJO / AMARILLO / VERDE.</li>
+          <li>Cita verbatim por brecha, con número de artículo, versión y estado de vigencia.</li>
+          <li>Dictamen ejecutivo de idoneidad y efectividad del MPD.</li>
+        </ul>
+      </article>
+
+      <article class="deliv">
+        <div class="deliv-tag">Documento II</div>
+        <h4>Hoja de ruta de remediación</h4>
+        <ul>
+          <li>Acción concreta por brecha ROJA — sin recomendaciones genéricas.</li>
+          <li>Responsable nominado (rol) y métrica de cierre verificable.</li>
+          <li>Plazo en uno de tres horizontes: 0–90, 91–180, 181–365 días.</li>
+          <li>Catálogo determinístico de acciones correctivas, no sugerencias abiertas.</li>
+        </ul>
+
+        <div class="roadmap" aria-label="Fragmento de hoja de ruta">
+          <div class="roadmap-head">
+            <span class="phase">Fase 0–90 días</span>
+            <span>Fragmento · 2 de 7 ítems</span>
+          </div>
+          <div class="roadmap-cols">
+            <span>Elemento</span><span>Acción</span><span>Responsable</span><span class="pl">Plazo</span>
+          </div>
+          <div class="roadmap-row">
+            <span class="el">Art. 4 N°2</span>
+            <span class="ac">Implementar canal de denuncia con custodia externa y bitácora cifrada.</span>
+            <span class="re">EPD</span>
+            <span class="pl">60 d</span>
+          </div>
+          <div class="roadmap-row">
+            <span class="el">Art. 4 N°3</span>
+            <span class="ac">Re-designar Encargado de Prevención con autonomía y reporte directo al directorio.</span>
+            <span class="re">Directorio</span>
+            <span class="pl">45 d</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta" id="contacto">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">06 · Diagnóstico</span>
+      <h2 class="sec-title">Solicite el <em>diagnóstico pagado</em> de su MPD.</h2>
+    </div>
+
+    <div class="cta-grid">
+      <div>
+        <p class="cta-lede">El diagnóstico es una auditoría externa, individual y modulada. No se asesora sobre el MPD: se evalúa contra el estándar legal vigente y se entrega el informe con la hoja de ruta.</p>
+        <ul class="cta-list">
+          <li><span class="k">Plazo</span><span class="v">Entrega entre 10 y 20 días hábiles según tamaño.</span></li>
+          <li><span class="k">Insumos</span><span class="v">MPD vigente o en diseño; manual de procesos si existe.</span></li>
+          <li><span class="k">Confidencialidad</span><span class="v">NDA firmado previo al envío de cualquier material.</span></li>
+          <li><span class="k">Honorarios</span><span class="v">Fijos por tramo de tamaño, cotizados antes de comenzar.</span></li>
+        </ul>
+      </div>
+
+      <form class="diag" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Solicitud registrada ✓';">
+        <div class="form-grid">
+          <div class="field full">
+            <label for="empresa">Empresa</label>
+            <input id="empresa" type="text" placeholder="Razón social" required />
+          </div>
+          <div class="field">
+            <label for="sector">Sector</label>
+            <select id="sector" required>
+              <option value="">Seleccione…</option>
+              <option>Educación superior</option>
+              <option>Servicios financieros</option>
+              <option>Construcción e inmobiliario</option>
+              <option>Salud</option>
+              <option>Retail y consumo</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="tamano">Tamaño</label>
+            <select id="tamano" required>
+              <option value="">Seleccione…</option>
+              <option>Micro</option>
+              <option>Pyme</option>
+              <option>Grande</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="estado">Estado del MPD</label>
+            <select id="estado" required>
+              <option value="">Seleccione…</option>
+              <option>Vigente — aprobado por directorio</option>
+              <option>En diseño</option>
+              <option>No existe</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="email">Email corporativo</label>
+            <input id="email" type="email" placeholder="usted@empresa.cl" required />
+          </div>
+          <div class="field">
+            <label for="tel">Teléfono</label>
+            <input id="tel" type="tel" placeholder="+56 …" />
+          </div>
+        </div>
+
+        <div class="form-foot">
+          <span class="note">Le contactamos en <b>48 horas hábiles.</b></span>
+          <button type="submit" class="btn btn-primary">Solicitar diagnóstico <span class="btn-arrow">→</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:14px">
+          <span class="brand-mark">P</span>
+          <span><span class="brand-name">Despacho Demo</span><span class="brand-suffix"> &middot; Carlos Palacios</span></span>
+        </div>
+        <p>Despacho especializado en Responsabilidad Penal de la Persona Jurídica (Ley 20.393 / Ley 21.595).</p>
+      </div>
+      <div class="foot">
+        <h5>Contacto</h5>
+        <a href="mailto:contacto@ejemplo.cl">contacto@ejemplo.cl</a>
+        <a href="tel:+56 2 0000 0000">+56 2 0000 0000</a>
+        <p>Santiago, Chile</p>
+      </div>
+      <div class="foot">
+        <h5>Servicio</h5>
+        <a href="#servicio">Auditoría MPD</a>
+        <a href="#metodologia">Metodología</a>
+        <a href="#entregables">Entregables</a>
+      </div>
+      <div class="foot">
+        <h5>Aviso</h5>
+        <p>El presente sitio no constituye asesoría legal. La auditoría se rige por contrato y NDA individuales. Toda referencia normativa cita versiones vigentes a la fecha del informe.</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Despacho Demo. Todos los derechos reservados.</span>
+      <span>Tecnología desarrollada por LegalTech CL</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
